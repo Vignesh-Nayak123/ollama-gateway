@@ -1,0 +1,23 @@
+{
+  "label": "queue 4, client ignores Retry-After",
+  "host": "local gateway",
+  "duration": "60s",
+  "finished_at": "2026-11-16T17:57:28+0530",
+  "env": {
+    "HONOR_RETRY_AFTER": "0"
+  },
+  "rows": [
+    {
+      "users": 16,
+      "requests_ok": 88,
+      "failures": 0,
+      "backpressure_503": 2542,
+      "p50_s": 3.1,
+      "p95_s": 4.7,
+      "p99_s": 5.6,
+      "avg_s": 3.19,
+      "req_per_s": 1.406,
+      "completion_tok_per_s": 89.97
+    }
+  ]
+}

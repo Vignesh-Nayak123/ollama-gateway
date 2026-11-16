@@ -1,0 +1,42 @@
+# Dependencies
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.egg-info/
+dist/
+build/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+.claude/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Tests and cache
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
+# Temporary
+tmp/
+*.tmp
+*.log
+
+# Experiment results (regenerate with scripts/experiments.py)
+experiments/results/
+
+# Load test output
+results/

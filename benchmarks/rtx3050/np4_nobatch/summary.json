@@ -1,0 +1,33 @@
+{
+  "label": "OLLAMA_NUM_PARALLEL=4, gateway batching off (BATCH_MAX_SIZE=1), queue 50",
+  "host": "local gateway",
+  "duration": "60s",
+  "finished_at": "2026-11-16T17:53:48+0530",
+  "env": {},
+  "rows": [
+    {
+      "users": 1,
+      "requests_ok": 53,
+      "failures": 0,
+      "backpressure_503": 0,
+      "p50_s": 1.1,
+      "p95_s": 1.5,
+      "p99_s": 1.6,
+      "avg_s": 1.11,
+      "req_per_s": 0.9,
+      "completion_tok_per_s": 57.63
+    },
+    {
+      "users": 8,
+      "requests_ok": 156,
+      "failures": 0,
+      "backpressure_503": 0,
+      "p50_s": 3.1,
+      "p95_s": 3.6,
+      "p99_s": 4.0,
+      "avg_s": 3.08,
+      "req_per_s": 2.575,
+      "completion_tok_per_s": 164.77
+    }
+  ]
+}

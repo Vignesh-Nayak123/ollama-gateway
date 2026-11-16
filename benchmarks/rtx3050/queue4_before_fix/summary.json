@@ -1,0 +1,21 @@
+{
+  "label": "queue 4, uvicorn keep-alive 5s (default)",
+  "host": "local gateway",
+  "duration": "60s",
+  "finished_at": "2026-11-16T17:55:03+0530",
+  "env": {},
+  "rows": [
+    {
+      "users": 16,
+      "requests_ok": 114,
+      "failures": 38,
+      "backpressure_503": 144,
+      "p50_s": 1.8,
+      "p95_s": 3.2,
+      "p99_s": 3.8,
+      "avg_s": 1.6,
+      "req_per_s": 1.778,
+      "completion_tok_per_s": 113.77
+    }
+  ]
+}

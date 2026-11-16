@@ -1,0 +1,21 @@
+{
+  "label": "OLLAMA_NUM_PARALLEL=4, queue 4, default keep-alive, with Connection: close fix",
+  "host": "local gateway",
+  "duration": "60s",
+  "finished_at": "2026-11-16T18:00:44+0530",
+  "env": {},
+  "rows": [
+    {
+      "users": 16,
+      "requests_ok": 140,
+      "failures": 0,
+      "backpressure_503": 144,
+      "p50_s": 1.6,
+      "p95_s": 1.9,
+      "p99_s": 2.0,
+      "avg_s": 1.68,
+      "req_per_s": 2.298,
+      "completion_tok_per_s": 147.08
+    }
+  ]
+}

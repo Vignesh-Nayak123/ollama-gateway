@@ -1,0 +1,57 @@
+{
+  "label": "OLLAMA_NUM_PARALLEL=4, gateway batching 8/100ms, queue 50",
+  "host": "local gateway",
+  "duration": "60s",
+  "finished_at": "2026-11-16T17:38:03+0530",
+  "env": {},
+  "rows": [
+    {
+      "users": 1,
+      "requests_ok": 51,
+      "failures": 0,
+      "backpressure_503": 0,
+      "p50_s": 1.2,
+      "p95_s": 1.3,
+      "p99_s": 1.4,
+      "avg_s": 1.17,
+      "req_per_s": 0.852,
+      "completion_tok_per_s": 54.55
+    },
+    {
+      "users": 4,
+      "requests_ok": 124,
+      "failures": 0,
+      "backpressure_503": 0,
+      "p50_s": 1.8,
+      "p95_s": 2.5,
+      "p99_s": 3.9,
+      "avg_s": 1.93,
+      "req_per_s": 2.005,
+      "completion_tok_per_s": 128.28
+    },
+    {
+      "users": 8,
+      "requests_ok": 139,
+      "failures": 0,
+      "backpressure_503": 0,
+      "p50_s": 3.5,
+      "p95_s": 3.8,
+      "p99_s": 3.9,
+      "avg_s": 3.41,
+      "req_per_s": 2.35,
+      "completion_tok_per_s": 150.38
+    },
+    {
+      "users": 16,
+      "requests_ok": 156,
+      "failures": 0,
+      "backpressure_503": 0,
+      "p50_s": 6.5,
+      "p95_s": 7.1,
+      "p99_s": 7.2,
+      "avg_s": 6.37,
+      "req_per_s": 2.446,
+      "completion_tok_per_s": 156.57
+    }
+  ]
+}

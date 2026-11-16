@@ -1,0 +1,63 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "model-serving-api"
+version = "0.1.0"
+description = "Production-grade model serving layer with request batching, SSE streaming, backpressure, and Prometheus metrics"
+readme = "README.md"
+requires-python = ">=3.12"
+license = {text = "MIT"}
+authors = [{name = "Vignesh Nayak"}]
+
+dependencies = [
+    "fastapi>=0.115",
+    "uvicorn>=0.34",
+    "sse-starlette>=2.0",
+    "httpx>=0.28",
+    "prometheus-client>=0.21",
+    "structlog>=24.1",
+    "pydantic>=2.6",
+    "pydantic-settings>=2.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-asyncio>=0.25",
+    "pytest-mock>=3.12",
+    "ruff>=0.9",
+]
+loadtest = [
+    "locust>=2.32",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/model_serving_api"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+pythonpath = ["src"]
+
+[tool.ruff]
+src = ["src", "tests"]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = [
+    "E",   # pycodestyle errors
+    "W",   # pycodestyle warnings
+    "F",   # pyflakes
+    "I",   # isort
+    "N",   # pep8-naming
+    "UP",  # pyupgrade
+    "B",   # flake8-bugbear
+    "SIM", # flake8-simplify
+    "RUF", # ruff-specific rules
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["model_serving_api"]

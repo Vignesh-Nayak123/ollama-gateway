@@ -1,0 +1,91 @@
+# Default: `docker compose up -d` starts only the API, which talks to an Ollama
+# running on the host (so it can use the host GPU and already-pulled models).
+#
+# Optional profiles:
+#   --profile bundled-ollama   run Ollama in a container instead (CPU-only unless you
+#                              add a GPU reservation); set OLLAMA_URL=http://ollama:11434
+#   --profile proxy            Caddy reverse proxy with auto-TLS (needs ports 80/443)
+#
+# Every setting can be overridden from the shell or a .env file (see .env.example).
+
+services:
+  api:
+    build: .
+    container_name: model-serving-api
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${API_PORT:-8000}:8000"
+    environment:
+      - OLLAMA_URL=${OLLAMA_URL:-http://host.docker.internal:11434}
+      - MODEL_NAME=${MODEL_NAME:-llama3.2:3b}
+      - MAX_QUEUE_SIZE=${MAX_QUEUE_SIZE:-50}
+      - BATCH_WAIT_MS=${BATCH_WAIT_MS:-100}
+      - BATCH_MAX_SIZE=${BATCH_MAX_SIZE:-8}
+      - REQUEST_TIMEOUT_SECONDS=${REQUEST_TIMEOUT_SECONDS:-60}
+      - SHUTDOWN_GRACE_SECONDS=${SHUTDOWN_GRACE_SECONDS:-30}
+      - WARMUP_ENABLED=${WARMUP_ENABLED:-true}
+      - WARMUP_TIMEOUT_SECONDS=${WARMUP_TIMEOUT_SECONDS:-300}
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - API_KEY=${API_KEY:-}
+    extra_hosts:
+      # Docker Desktop resolves this already; this line makes it work on Linux too.
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test:
+        - CMD
+        - python
+        - -c
+        - "import urllib.request; urllib.request.urlopen('http://localhost:8000/health', timeout=3)"
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    networks:
+      - serving-net
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: model-serving-ollama
+    profiles: ["bundled-ollama"]
+    restart: unless-stopped
+    environment:
+      - OLLAMA_HOST=0.0.0.0:11434
+    volumes:
+      - ollama-data:/root/.ollama
+    networks:
+      - serving-net
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  caddy:
+    image: caddy:2-alpine
+    container_name: model-serving-caddy
+    profiles: ["proxy"]
+    restart: unless-stopped
+    ports:
+      - "${CADDY_HTTP_PORT:-80}:80"
+      - "${CADDY_HTTPS_PORT:-443}:443"
+      - "${CADDY_HTTPS_PORT:-443}:443/udp"
+    environment:
+      - DOMAIN=${DOMAIN:-localhost}
+    volumes:
+      - ./deploy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    networks:
+      - serving-net
+    depends_on:
+      - api
+
+networks:
+  serving-net:
+    driver: bridge
+
+volumes:
+  ollama-data:
+  caddy-data:
+  caddy-config:
